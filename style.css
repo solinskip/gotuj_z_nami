@@ -317,30 +317,112 @@ ul li.wyniki_wyszukiwania a:focus {
 	float: left;
 	background-color: #e2e2e2;
 	width: 250px;
+	height: 350px;
 	-webkit-box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.2);
 	-moz-box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.2);
 	box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.2);
 }
-.pipt{
+.pips{
 	font-size: 22px;
 	color: #4267b2;
 	text-align: center;
 	font-weight: bold;
 	padding-bottom: 10px;
 }
+.przepis_info_przepisu > dl > dt {
+	color: #333333;
+	padding: 7px 7px;
+}
+.przepis_info_przepisu > dl > dt:first-child {
+	padding-top: 2px;
+}
 .przepis_info_przepisu > dl > dd {
 	border-bottom: 1px solid white;
+	padding-left: 13px;
+	padding-bottom: 7px;
 }
-.skladniki
-{
+.przepis_info_przepisu > dl > dd:last-child {
+	border: none;
+}
+.przepis_info_przepisu > dl > dd > i{
+	padding-right: 4px;
+}
+.przepis_info_przepisu > dl > dd:last-child > i{
+	padding-right: 0px;
+}
+.przepis_skladniki{
 	float: left;
-	width: 35%;
-	
+	width: 28%;
+	margin-right: 30px;
+	margin-bottom: 30px;
 }
-.przygotowanie
-{
+.przepis_skladniki > ul > li{
+	border-bottom: 1px solid gray;
+	list-style-type: none;
+	padding: 3px 5px;
+	margin-left: 5px;
+}
+.pipt{
+	color: #4267b2;
+	font-size: 22px;
+	font-weight: bold;
+	padding: 8px 0px;
+}
+.przepis_przygotowanie{
 	float: left;
 	width: 65%;
+	margin-bottom: 30px;
+}
+.przepis_dk input{
+	border:none;
+	border-bottom:1px solid #4267b2;
+	width:400px;
+	text-align: center;
+	font-size: 18px;
+	margin-top: 5px;
+	margin-bottom: 15px;
+}
+.przepis_dk input:focus{
+	outline: none !important; 
+	border:none !important;
+	border-bottom:1px solid #4267b2 !important;
+}
+.przepis_dk_p{
+	margin-left: 5px;
+	border-radius: 14px 14px 14px 14px;
+	-moz-border-radius: 14px 14px 14px 14px;
+	-webkit-border-radius: 14px 14px 14px 14px;
+	border: 0px solid #000000;
+	background-color: #4267b2;
+	color: white;
+	font-size: 18px;
+	padding: 6px;
+}
+.przepis_k{
+
+}
+.przepis_wk{
+
+}
+.przepis_pk{
+
+}
+.przepis_pk_u{
+	float: left;
+	color: #4267b2;
+	font-size: 20px;
+	padding-right: 10px;
+	line-height: 25px;
+	vertical-align: middle;
+}
+.przepis_pk_d{
+	float: left;
+	line-height: 25px;
+	vertical-align: middle;
+}
+.przepis_pk_k{
+	padding-left: 28px;
+	padding-bottom: 10px;
 }
 /*CSS dodaj nowy przepis */
 #nie_zalogowany_n_p{

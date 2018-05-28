@@ -35,6 +35,36 @@
       "css": "star-half-alt",
       "code": 61731,
       "src": "fontawesome"
+    },
+    {
+      "uid": "30b79160618d99ce798e4bd11cafe3fe",
+      "css": "food",
+      "code": 61685,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "12d16dda691bda304e3b57d7bc0de5a9",
+      "css": "lightbulb",
+      "code": 59395,
+      "src": "typicons"
+    },
+    {
+      "uid": "2355991b4045d64b08fb82988109c0ee",
+      "css": "info-circled",
+      "code": 59396,
+      "src": "elusive"
+    },
+    {
+      "uid": "14017aae737730faeda4a6fd8fb3a5f0",
+      "css": "check",
+      "code": 59397,
+      "src": "entypo"
+    },
+    {
+      "uid": "3fce1eca43f917c8f23e532749abae5d",
+      "css": "user-circle-o",
+      "code": 62142,
+      "src": "fontawesome"
     }
   ]
 }

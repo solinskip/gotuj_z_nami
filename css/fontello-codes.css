@@ -3,4 +3,9 @@
 .icon-star-empty:before { content: '\e800'; } /* '' */
 .icon-chart-bar:before { content: '\e801'; } /* '' */
 .icon-star:before { content: '\e802'; } /* '' */
+.icon-lightbulb:before { content: '\e803'; } /* '' */
+.icon-info-circled:before { content: '\e804'; } /* '' */
+.icon-check:before { content: '\e805'; } /* '' */
+.icon-food:before { content: '\f0f5'; } /* '' */
 .icon-star-half-alt:before { content: '\f123'; } /* '' */
+.icon-user-circle-o:before { content: '\f2be'; } /* '' */
