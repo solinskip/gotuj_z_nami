@@ -55,6 +55,75 @@
 		});
 	});
 
+		$(".przepis_dk_p").click(function() {
+			dodaj_komentarz();
+	});
+
+	$("#przepis_dk_t").keypress(function(e) {
+		if(e.keyCode == 13){
+			dodaj_komentarz();
+		}
+	});
+
+	$(".przepis_pk_uk_id").click(function() {
+		var id_komentarza_js = this.id;
+		/*var element = document.getElementById("przepis_pk_id_"+id_komentarza_js);
+		element.remove();*/
+
+		$(this).parent().closest(".przepis_pk").remove();
+
+		$.post("usun_komentarz.php", {
+			id_komentarza: id_komentarza_js
+		}, function(data,status) {
+
+		});
+	});
+
+	$(".container").rating(function(vote,event){
+		var url_s = document.location;
+		var url = new URL(url_s);
+		var id_przepisu_js = url.searchParams.get("id");
+    	$.ajax({
+    		url: 'ocena_przepisu.php',
+    		type: 'POST',
+    		data: {vote:vote,
+    			   id_przepisu:id_przepisu_js}
+    	})
+    	.done(function(info) {
+    		$(".przepis_op_i").html(info)
+    	})   	
+    });
+
+    $("#przepis_ip_pot").click(function() {
+    	var url_s = document.location;
+		var url = new URL(url_s);
+		var id_przepisu_js = url.searchParams.get("id");
+		$.ajax({
+			url: 'czas_przygotowania.php',
+			type: 'POST',
+			data: {poprawny: "1",
+				   id_przepisu: id_przepisu_js}
+		})
+		.done(function(info) {
+			$(".przepis_ip_cp_2").html(info)
+		})
+    });
+
+    $("#przepis_ip_zap").click(function() {
+    	var url_s = document.location;
+		var url = new URL(url_s);
+		var id_przepisu_js = url.searchParams.get("id");
+		$.ajax({
+			url: 'czas_przygotowania.php',
+			type: 'POST',
+			data: {niepoprawny: "1",
+				   id_przepisu: id_przepisu_js}
+		})
+		.done(function(info) {
+			$(".przepis_ip_cp_2").html(info)
+		})
+    });
+
 });
 
 function wyswietl_miniature(files) {
@@ -70,4 +139,23 @@ function wyswietl_miniature(files) {
 	}
 }
 
+function wyczysc_input() {
+	$("#przepis_dk_f :input").each(function() {
+		$(this).val('');
+	});
+}
 
+function dodaj_komentarz() {
+		var komentarz_js = $("#przepis_dk_t").val();
+		var url_s = document.location;
+		var url = new URL(url_s);
+		var id_przepisu_js = url.searchParams.get("id");
+
+		$.post("dodaj_komentarz.php", {
+			komentarz: komentarz_js,
+			id_przepisu: id_przepisu_js
+		}, function(data, status) {
+			$("#przepis_nk").append(data);
+		});
+		wyczysc_input();
+}

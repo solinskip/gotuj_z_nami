@@ -29,6 +29,7 @@
 					if(password_verify($haslo,$wiersz['haslo'])){
 						$_SESSION['zalogowany'] = true;
 						$_SESSION['uzytkownik'] = $wiersz['uzytkownik'];
+						$_SESSION['id_uzytkownika'] = $wiersz['id_uzytkownika'];
 						header('Location: '.$_SESSION['aktualna_strona']);
 					}
 					else{

@@ -65,6 +65,18 @@
       "css": "user-circle-o",
       "code": 62142,
       "src": "fontawesome"
+    },
+    {
+      "uid": "51fb22f9ff9d7f60c95ef31e4c59502d",
+      "css": "comment",
+      "code": 62636,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "5211af474d3a9848f67f945e2ccaf143",
+      "css": "cancel",
+      "code": 59398,
+      "src": "fontawesome"
     }
   ]
 }

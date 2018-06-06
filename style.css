@@ -316,11 +316,35 @@ ul li.wyniki_wyszukiwania a:focus {
 {
 	float: left;
 	background-color: #e2e2e2;
-	width: 250px;
+	width: 280px;
 	height: 350px;
 	-webkit-box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.2);
 	-moz-box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.2);
 	box-shadow: 0px 0px 21px -1px rgba(0,0,0,0.2);
+}
+.przepis_ip_cp_1{
+	float: left;
+}
+.przepis_ip_cp_2{
+	float: left;
+	width: 100px;
+	padding-top: 5px !important;
+	padding-right: 7px;
+	text-align: center;
+	font-size: 16px;
+	max-height: 25px;
+	
+}
+.przepis_ip_cp_3{
+	float: left;
+	padding-right: 3px;
+}
+.przepis_ip_cp_4{
+		border-bottom: 1px solid white;
+		float: left;
+		width: 100px;
+		padding-right: 8px;
+		height: 19px;
 }
 .pips{
 	font-size: 22px;
@@ -349,6 +373,17 @@ ul li.wyniki_wyszukiwania a:focus {
 }
 .przepis_info_przepisu > dl > dd:last-child > i{
 	padding-right: 0px;
+}
+.przepis_ip_p{
+	padding-left: 10px;
+	color: green;
+	font-size: 18px;
+	cursor: pointer;
+}
+.przepis_ip_z{
+	color: #eb2f06;
+	font-size: 18px;
+	cursor: pointer;
 }
 .przepis_skladniki{
 	float: left;
@@ -387,7 +422,7 @@ ul li.wyniki_wyszukiwania a:focus {
 	border:none !important;
 	border-bottom:1px solid #4267b2 !important;
 }
-.przepis_dk_p{
+.przepis_dk a{
 	margin-left: 5px;
 	border-radius: 14px 14px 14px 14px;
 	-moz-border-radius: 14px 14px 14px 14px;
@@ -397,6 +432,7 @@ ul li.wyniki_wyszukiwania a:focus {
 	color: white;
 	font-size: 18px;
 	padding: 6px;
+	cursor: pointer;
 }
 .przepis_k{
 
@@ -420,9 +456,24 @@ ul li.wyniki_wyszukiwania a:focus {
 	line-height: 25px;
 	vertical-align: middle;
 }
+.przepis_pk_uk{
+	float: left;
+	line-height: 20px;
+	vertical-align: middle;
+	cursor: pointer;
+}
 .przepis_pk_k{
 	padding-left: 28px;
 	padding-bottom: 10px;
+}
+.przepis_op_sr{
+	float: left;
+	padding-left: 5px;
+	font-size: 17px;
+	line-height: 18px;
+	vertical-align: middle;
+	color:#4a69bd;
+	font-weight: bold;
 }
 /*CSS dodaj nowy przepis */
 #nie_zalogowany_n_p{
