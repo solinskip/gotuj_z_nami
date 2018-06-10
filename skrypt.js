@@ -34,13 +34,20 @@
 	var i_s = 2;
 	$("#dodaj_skladnik_p").click(function() {
 		var pole_skladnik = document.getElementById("nowe_skladniki_p");
+
+		var span = document.createElement("div");
+		span.setAttribute("class", "input_ods");
+
 		var nowe_pole = document.createElement("input");
 		nowe_pole.type = 'text';
-		nowe_pole.setAttribute("class", "input_p_s");
+		nowe_pole.setAttribute("class", "input_p");
 		nowe_pole.name = 'skladnik_p'+i_s;
+		var remove = '<div class="usun_skladnik">Usuń składnik</div>';
 		i_s++;
 
-		pole_skladnik.appendChild(nowe_pole);
+		pole_skladnik.appendChild(span);
+		span.appendChild(nowe_pole);
+		span.appendChild(remove);
 	});
 
 	$("#wyszukiwarka").keyup(function() {
@@ -131,18 +138,12 @@ function wyswietl_miniature(files) {
 	if(files.length){
 		var img = document.createElement("img");
 		img.src = window.URL.createObjectURL(files[0]);
-		img.height = 60;
+		img.height = 300;
 		img.onload = function() {
 			window.URL.revokeObjectURL(this.src);
 		}
 		mdp.appendChild(img);
 	}
-}
-
-function wyczysc_input() {
-	$("#przepis_dk_f :input").each(function() {
-		$(this).val('');
-	});
 }
 
 function dodaj_komentarz() {
@@ -158,4 +159,9 @@ function dodaj_komentarz() {
 			$("#przepis_nk").append(data);
 		});
 		wyczysc_input();
+}
+function wyczysc_input() {
+	$("#przepis_dk_t").each(function() {
+		$(this).val('');
+	});
 }

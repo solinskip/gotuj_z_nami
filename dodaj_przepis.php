@@ -1,6 +1,7 @@
 <?php 	
 	session_start(); 
 	require_once "polaczenie.php";
+	$test =1 ;
 	$_SESSION['aktualna_strona'] = $_SERVER['REQUEST_URI']; 
 
 	if(isset($_POST['tytul_p'])){
@@ -73,20 +74,20 @@
 
 		//sprawdzanie poprawności tytułu
 		$tytul_p = $_POST['tytul_p'];
-		if(strlen($tytul_p) <= 3){
+		if((strlen($tytul_p) <= 3) || (strlen($tytul_p) > 50)){
 			$tytul_p_error = "Tytuł powinien zawierać od 3 do 30 znaków";
 			$wszystkoOK = false;
 		}
 
 		//sprawdzanie wstępu 
 		$wstep_p = $_POST['wstep_p'];
-		if((strlen($wstep_p) <10) || (strlen($_POST['wstep_p']) > 60)){
-			$wstep_p_error = "Wstep powinien zawierać od 10 do 60 znaków";
+		if((strlen($wstep_p) <10) || (strlen($_POST['wstep_p']) > 200)){
+			$wstep_p_error = "Wstep powinien zawierać od 10 do 200 znaków";
 			$wszystkoOK = false;
 		}
 
 		//sprawdzanie skladników
-		$skladnik_p_1 = $_POST['skladnik_p_1'];
+		$skladnik_p_1 = $_POST['skladnik_p1'];
 		if(strlen($skladnik_p_1) == 0){
 			$skladnik_p_1_error = "Musisz podać przynajmniej jeden składnik";
 			$wszystkoOK = false;
@@ -105,6 +106,12 @@
 			$wszystkoOK = false;
 		}
 
+		$stopien_t = $_POST['stopien_t'];
+		if(!isset($_POST['stopien_t'])){
+			$stopien_t_error = "Wybierz stopień trudności potrawy";
+			$wszystkoOK = false;
+		}
+
 		$czas_przygotowania_d_p = $_POST['czas_przygotowania_d_p'];
 		if((strlen($czas_przygotowania_d_p)) == 0){
 			$czas_przygotowania_d_p_error = "Podaj czas przygotowania potrawy";
@@ -117,26 +124,74 @@
 			$wszystkoOK = false;
 		}
 
+		$skladnik_d_p = $_POST['skladnik_p1'];
+		if((strlen($skladnik_d_p)) < 2){
+			$skladnik_d_p_error = "Podaj przynajmniej jeden składnik";
+			$wszystkoOK = false;
+		}
+
 		$przygotowanie_d_p = $_POST['przygotowanie_d_p'];
 		if((strlen($przygotowanie_d_p)) < 3){
 			$przygotowanie_d_p_error = "Opis przygotowania dania powinien zawierać przynajmniej 30 znaków";
 			$wszystkoOK = false;
 		}
 
+		//sprawdzanie czy wcześniej były zaznaczone pole select-kategoria i sposób przygotowania
+		$i = 2;
+		$koniec_f = true;
+		function select_ks($tmp){
+			global $koniec_f;
+			if(!$koniec_f){
+				global $i;
+				if($tmp == $i) { 
+					echo "selected";
+					$i=2;
+					$koniec_f = true;
+				}
+				else {
+					$i++;
+				}
+			}
+		}
+
 		//wgrywanie danych do bazy
 		if($wszystkoOK == true){
 			try {
-			$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
-			if($polaczenie->connect_errno!=0){
-				throw new Exception(mysqli_connect_errno());
-			}
-			else{
-				$polaczenie->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
-				$polaczenie->query("SET CHARSET utf8");
-				$uzytkownik = $_SESSION['uzytkownik'];
-				if($polaczenie->query("INSERT INTO przepisy VALUES(NULL,'$tytul_p','','$przygotowanie_d_p','$wstep_p','$uzytkownik','$kategoria_d_p','$czas_przygotowania_d_p','','$skladniki_na_d_p','$sposob_przygotowania_d_p')")){ echo "wszystkoOK";}
+					$polaczenie = new mysqli($host, $db_user, $db_password, $db_name);
+					if($polaczenie->connect_errno!=0){
+					throw new Exception(mysqli_connect_errno());
+				}
+				else{
+					$polaczenie->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
+					$polaczenie->query("SET CHARSET utf8");
+					$rezultat_id_przepisu = @$polaczenie->query("SELECT COUNT(id_przepisu) AS id_przepisu FROM przepisy");
+					$id_przepisu_nowa_potrawa = $rezultat_id_przepisu->fetch_assoc();
+					$id_przepisu_nowa_potrawa_p1 = $id_przepisu_nowa_potrawa['id_przepisu'] + 1;
+					$id_uzytkownika = $_SESSION['id_uzytkownika'];
+					if(isset($_POST['danie_bezglutenowe'])) { $danie_bezglutenowe = $_POST['danie_bezglutenowe']; }
+					if(isset($_POST['danie_wegetarianskie'])) { $danie_wegetarianskie = $_POST['danie_wegetarianskie']; }
+					if(isset($_POST['danie_dietetyczne'])) { $danie_dietetyczne = $_POST['danie_dietetyczne']; }
+					if(isset($_POST['danie_dla_dzieci'])) { $danie_dla_dzieci = $_POST['danie_dla_dzieci']; }
+					if(isset($_POST['szybka_kuchnia'])) { $szybka_kuchnia = $_POST['szybka_kuchnia']; }
+					$tmp = "1";
+
+					while(isset($_POST['skladnik_p'.$tmp])){
+						if($tmp==1){ $skladniki = $_POST['skladnik_p'.$tmp]; }
+						else{ $skladniki = $skladniki.",".$_POST['skladnik_p'.$tmp]; }
+						$tmp +=1;
+					}
+					echo $skladniki;
+
+					if($polaczenie->query("INSERT INTO przepisy VALUES(NULL,'$tytul_p','$skladniki','$przygotowanie_d_p','$wstep_p','$id_uzytkownika','$kategoria_d_p','$czas_przygotowania_d_p','$stopien_t','$skladniki_na_d_p','$sposob_przygotowania_d_p','$danie_bezglutenowe','$danie_wegetarianskie','$danie_dietetyczne','$danie_dla_dzieci','$szybka_kuchnia')")){
+						unset($danie_bezglutenowe);
+						unset($danie_wegetarianskie);
+						unset($danie_dietetyczne);
+						unset($danie_dla_dzieci);
+						unset($szybka_kuchnia);
+						header ('Location: przepis.php?id='.$id_przepisu_nowa_potrawa_p1);
+						exit();
+					}
 				$polaczenie->close();
-				echo "wszystkoOK";
 			}
 			} 
 			catch (Exception $e) {
@@ -157,6 +212,7 @@
 			$polaczenie->query("SET CHARSET utf8");
 			$rezultat_kategorie = @$polaczenie->query("SELECT * FROM kategorie");
 			$rezultat_sposob_przygotowania = @$polaczenie->query("SELECT * FROM sposob_przygotowania");
+
 			$polaczenie->close();
 		}
 	} 
@@ -187,13 +243,13 @@
 			</div>
 		<?php } else{ ?>
 			<div>
-				<h2>Dodaj przepis</h2>
+				<h1 class="np_dp">Dodaj przepis</h1>
 			</div>
 			<div id="tresc_przepisu">
 				<form method="POST" enctype="multipart/form-data">
 					<div class="wiersz_p">
 						<label class="tytul_d_p">Tytuł</label>
-						<input type="text" name="tytul_p" class="input_p" maxlength="100" <?php echo (isset($_POST['tytul_p'])) ? 'value="'.$_POST['tytul_p'].'"' : ''; ?>>
+						<input type="text" name="tytul_p" class="input_p1" maxlength="100" <?php echo (isset($_POST['tytul_p'])) ? 'value="'.$_POST['tytul_p'].'"' : ''; ?>>
 						<?php if(isset($tytul_p_error)){
 							echo '<div class="error_d_p">'.$tytul_p_error.'</div>';
 							unset($tytul_p_error);
@@ -201,7 +257,7 @@
 					</div>
 					<div class="wiersz_p">
 						<label class="tytul_d_p">Wstęp</label>
-						<input type="text" class="input_p" name="wstep_p" <?php echo (isset($_POST['wstep_p'])) ? 'value="'.$_POST['wstep_p'].'"' : ''; ?>>
+						<input type="text" class="input_p1" name="wstep_p" <?php echo (isset($_POST['wstep_p'])) ? 'value="'.$_POST['wstep_p'].'"' : ''; ?>>
 						<?php if(isset($wstep_p_error)){
 							echo '<div class="error_d_p">'.$wstep_p_error.'</div>';
 							unset($wstep_p_error);
@@ -210,69 +266,119 @@
 					<div class="wiersz_pfl">
 						<div id="miniatura_dodanej_potrawy"></div>
 		  				<label class="tytul_d_p">Wybierz zdjęcie potrawy</label>
-		   				<input type="file" name="fileToUpload" id="fileToUpload" class="input_p" multiple accept="image/*" onchange="wyswietl_miniature(this.files)">
+		   				<input type="file" name="fileToUpload" id="fileToUpload" class="input_p2" multiple accept="image/*" onchange="wyswietl_miniature(this.files)">
 		   				<?php if(isset($upload_image_error)){
 		   					echo '<div class="error_d_p">'.$upload_image_error.'</div>';
 							unset($upload_image_error);
 						} ?>
 					</div>
 					<div class="wiersz_pfl">
-						<label class="tytul_d_p">Kategoria</label>
-						<select name="kategoria_d_p" class="input_p">
-							<option value="1">--wybierz--</option>
-							<?php while($kategoria = $rezultat_kategorie->fetch_assoc()) { ?>
-								<option value="<?php echo $kategoria['id_kategori']; ?>"><?php echo $kategoria['nazwa_kategori']; ?></option>
-							<?php } ?>
-						</select>
-						<?php if(isset($kategoria_d_p_error)){
+						<div class="wiersz_p">
+							<label class="tytul_d_p">Kategoria</label>
+							<select name="kategoria_d_p" class="input_p">
+								<option value="1">--wybierz--</option>
+								<?php $koniec_f = false; while($kategoria = $rezultat_kategorie->fetch_assoc()) { ?>
+								<option value="<?php echo $kategoria['id_kategori']; ?>"  
+									<?php if(isset($_POST['kategoria_d_p'])){ select_ks($kategoria_d_p); } ;?>>
+									<?php  echo $kategoria['nazwa_kategori']; ?>
+								</option>
+								<?php } ?>
+							</select>
+							<?php if(isset($kategoria_d_p_error)){
 							echo '<div class="error_d_p">'.$kategoria_d_p_error.'</div>';
 							unset($kategoria_d_p_error);
 						} ?>
-						<label class="tytul_d_p">Sposób przygotowania</label>
-						<select name="sposob_przygotowania_d_p" class="input_p" >
-							<option value="0">--wybierz--</option>
-							<?php while($sposob_przygotowania = $rezultat_sposob_przygotowania->fetch_assoc()){ ?>
-							<option value="<?php echo $sposob_przygotowania['id_spos_przygotowania']; ?>"><?php echo $sposob_przygotowania['nazwa_spos_przygotowania']; ?></option>
-							<?php } ?>
-						</select>
-						<?php if(isset($sposob_przygotowania_d_p_error)){
+						</div>
+						<div class="wiersz_p">
+							<label class="tytul_d_p">Sposób przygotowania</label>
+							<select name="sposob_przygotowania_d_p" class="input_p">
+								<option value="0">--wybierz--</option>
+								<?php $koniec_f = false; $i-=1; while($sposob_przygotowania = $rezultat_sposob_przygotowania->fetch_assoc()){ ?>
+								<option value="<?php echo $sposob_przygotowania['id_spos_przygotowania']; ?>" <?php if(isset($_POST['sposob_przygotowania_d_p'])){ select_ks($sposob_przygotowania_d_p); } ?> ><?php echo $sposob_przygotowania['nazwa_spos_przygotowania']; ?></option>
+								<?php } ?>
+							</select>
+							<?php if(isset($sposob_przygotowania_d_p_error)){
 							echo '<div class="error_d_p">'.$sposob_przygotowania_d_p_error.'</div>';
 							unset($sposob_przygotowania_d_p_error);
-						} ?>
-						<label class="tytul_d_p">Czas przygotowania</label><br>
-						<input  type="text" name="czas_przygotowania_d_p" <?php echo (isset($_POST['czas_przygotowania_d_p'])) ? 'value="'.$_POST['czas_przygotowania_d_p'].'"' : ''; ?>> min.
-						<?php if(isset($czas_przygotowania_d_p_error)){
+							} ?>
+						</div>
+						<div class="wiersz_p">
+							<label class="tytul_d_p">Stopień trudności</label>
+							<div class="stopien_trudnosci_d">	
+							<label class="radio_checkbox">Łatwy
+								<input type="radio" name="stopien_t" value="1" <?php if(isset($_POST['stopien_t']) AND $_POST['stopien_t'] == 1) echo "checked"; ?> ">
+								<span class="checkmark"></span>
+							</label>
+							<label class="radio_checkbox">Średni
+								<input type="radio" name="stopien_t" value="2" <?php if(isset($_POST['stopien_t']) AND $_POST['stopien_t'] == 2) echo "checked"; ?>>
+								<span class="checkmark"></span>
+							</label>
+							<label class="radio_checkbox">Trudny
+								<input type="radio" name="stopien_t" value="3" <?php if(isset($_POST['stopien_t']) AND $_POST['stopien_t'] == 3) echo "checked"; ?>>
+								<span class="checkmark"></span>
+							</label>
+							<div style="clear: both;"></div>
+							<?php if(isset($stopien_t_error)){
+								echo '<div class="error_d_p">'.$stopien_t_error.'</div>';
+								unset($stopien_t_error);
+							} ?>
+						</div>
+						
+						</div>
+						<div class="wiersz_p">
+							<label class="tytul_d_p">Czas przygotowania</label><br>
+							<input class="input_p_bd" type="text" name="czas_przygotowania_d_p" <?php echo (isset($_POST['czas_przygotowania_d_p'])) ? 'value="'.$_POST['czas_przygotowania_d_p'].'"' : ''; ?>> min.
+							<?php if(isset($czas_przygotowania_d_p_error)){
 							echo '<div class="error_d_p">'.$czas_przygotowania_d_p_error.'</div>';
 							unset($czas_przygotowania_d_p_error);
-						}
+							}
+							else{ echo '<br>'; } ?>
+						</div>
+						<div class="wiersz_p">
+							<label class="tytul_d_p">Składni na</label><br>
+							<input class="input_p_bd" type="text" name="skladniki_na_d_p" <?php echo (isset($_POST['skladniki_na_d_p'])) ? 'value="'.$_POST['skladniki_na_d_p'].'"' : ''; ?>> porcji
+							<?php if(isset($skladniki_na_d_p_error)){
+								echo '<div class="error_d_p">'.$skladniki_na_d_p_error.'</div>';
+								unset($skladniki_na_d_p_error);
+							}
 						else{ echo '<br>'; } ?>
-						<label class="tytul_d_p">Skadni na</label><br>
-						<input type="text" name="skladniki_na_d_p" <?php echo (isset($_POST['skladniki_na_d_p'])) ? 'value="'.$_POST['skladniki_na_d_p'].'"' : ''; ?>> porcji
-						<?php if(isset($skladniki_na_d_p_error)){
-							echo '<div class="error_d_p">'.$skladniki_na_d_p_error.'</div>';
-							unset($skladniki_na_d_p_error);
-						}
-						else{ echo '<br>'; } ?>
-						<label><input type="checkbox" name="danie_bezglutenowe" value="1">Danie bezglutenowe</label>
-						<label><input type="checkbox" name="danie_wegetarianskie" value="1">Danie wegetariańskie</label>
-						<label><input type="checkbox" name="danie_dietetyczne" value="1">Danie dietetyczne</label>
-						<label class="input_p"><input type="checkbox" name="danie_dla_dzieci" value="1">Danie dla dzieci</label>
-						<label><input type="checkbox" name="szybka_kuchnia" value="1">Szybka kuchnia</label>
+						</div>
+						<label class="radio_checkbox">Danie bezglutenowe
+							<input type="checkbox" name="danie_bezglutenowe" value="1" <?php if(isset($_POST['danie_bezglutenowe']) AND $_POST['danie_bezglutenowe'] == 1) echo "checked"; ?> ">
+							<span class="checkmark"></span>
+						</label>
+						<label class="radio_checkbox">Danie wegetariańskie
+							<input type="checkbox" name="danie_wegetarianskie" value="1" <?php if(isset($_POST['danie_wegetarianskie']) AND $_POST['danie_wegetarianskie'] == 1) echo "checked"; ?> ">
+							<span class="checkmark"></span>
+						</label>
+						<label class="radio_checkbox">Danie dietetyczne
+							<input type="checkbox" name="danie_dietetyczne" value="1" <?php if(isset($_POST['danie_dietetyczne']) AND $_POST['danie_dietetyczne'] == 1) echo "checked"; ?> ">
+							<span class="checkmark"></span>
+						</label>
+						<label class="radio_checkbox"></label>
+						<label class="radio_checkbox" style="margin-left: -25px !important ;">Danie dla dzieci
+							<input type="checkbox" name="danie_dla_dzieci" value="1" <?php if(isset($_POST['danie_dla_dzieci']) AND $_POST['danie_dla_dzieci'] == 1) echo "checked"; ?> ">
+							<span class="checkmark"></span>
+						</label>
+						<label class="radio_checkbox">Szybka kuchnia
+							<input type="checkbox" name="szybka_kuchnia" value="1" <?php if(isset($_POST['szybka_kuchnia']) AND $_POST['szybka_kuchnia'] == 1) echo "checked"; ?> ">
+							<span class="checkmark"></span>	
+						</label>
 					</div>
 					<div style="clear: both;"></div>
 					<div id="skladniki_p" class="wiersz_pfl">
 						<label class="tytul_d_p">Składniki</label>
-						<input class="input_p" type="text" name="skladnik_p_1">
-						<?php if(isset($skladnik_p_1_error)){
-							echo '<div class="error_d_p">'.$skladnik_p_1_error.'</div>';
-							unset($skladnik_p_1_error);
+						<input class="input_p" type="text" name="skladnik_p1">
+						<?php if(isset($skladnik_d_p_error)){
+							echo '<div class="error_d_p">'.$skladnik_d_p_error.'</div>';
+							unset($skladnik_d_p_error);
 						} ?>
 						<div id="nowe_skladniki_p"></div>
 						<a id="dodaj_skladnik_p">Dodaj nowy skladnik</a>
 					</div>
 					<div class="wiersz_pfl">
 						<label class="tytul_d_p">Przygotowanie</label><br>
-						<textarea name="przygotowanie_d_p" rows=10 cols= 60><?php echo (isset($_POST['przygotowanie_d_p'])) ? $_POST['przygotowanie_d_p'] : ''; ?></textarea>
+						<textarea class=""input_p" name="przygotowanie_d_p" rows=10 cols= 60><?php echo (isset($_POST['przygotowanie_d_p'])) ? $_POST['przygotowanie_d_p'] : ''; ?></textarea>
 						<?php if(isset($przygotowanie_d_p_error)){
 							echo '<div class="error_d_p">'.$przygotowanie_d_p_error.'</div>';
 							unset($przygotowanie_d_p_error);
@@ -280,7 +386,7 @@
 					</div>
 					<div style="clear: both;"></div>
 					<div class="wiersz_p">
-						<input type="submit" name="Zapisz przepis">
+						<input class="dp_s" type="submit" name="Zapisz przepis">
 					</div>
 				</form>
 			</div>

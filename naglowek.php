@@ -13,8 +13,15 @@
 		<?php 
 			if((isset($_SESSION['zalogowany']) && ($_SESSION['zalogowany'] == true))){ ?>
 				<div id="zalogowany">
-				<div id="profil">Witaj <?php echo $_SESSION['uzytkownik'] ?></div>
-				<a href="wyloguj.php">Wyloguj się</a>
+					<div tabindex="0" class="onclick_menu">
+						Witaj <?php echo $_SESSION['uzytkownik'] ?> <i class="fas fa-chevron-down"></i>
+						<ul class="onclick_menu_content">
+							<li>
+								<a href="profil.php" ><i class="fas fa-user"></i>Profil</a>
+							</li>
+							<li><a href="wyloguj.php"><i class="fas fa-sign-out-alt"></i>Wyloguj się</a></li>
+						</ul>
+					</div>
 				</div>
 			<?php } else{ ?>
 				<div id="logowanie">
@@ -43,18 +50,24 @@
 							<div class="rejestracja_cialo">
 							<!-- Pola rejestracji -->
 								<form action="">
-									<label>Nazwa użytkownika</label><br>
-									<input type="text" id="uzytkownik" name="uzytkownik" placeholder="Wpisz swoją nazwe użytkownika" autocomplete="off"><br>
+									
+									<div class="rc_w">
+										<label class="rc_t">Nazwa użytkownika</label><br>
+										<input type="text" id="uzytkownik" name="uzytkownik" placeholder="Wpisz swoją nazwe użytkownika" autocomplete="off">
+									</div>
 
-									<label>Email</label><br>
-									<input type="text" id="email" name="email" placeholder="wpisz adres email"><br>
-
-									<label>Hasło</label><br>
-									<input type="password" id="haslo1" name="haslo1" placeholder="Wpisz hasło"><br>
-
-									<label>Powtórz hasło</label><br>
-									<input type="password" id="haslo2" name="haslo2" placeholder="Powtórz hasło">
-
+									<div class="rc_w">	
+											<label class="rc_t">Email</label><br>
+											<input type="text" id="email" name="email" placeholder="Wpisz adres email"><br>
+									</div>
+									<div class="rc_w">
+											<label class="rc_t">Hasło</label><br>
+											<input type="password" id="haslo1" name="haslo1" placeholder="Wpisz hasło"><br>
+									</div>
+									<div class="rc_w">
+											<label class="rc_t">Powtórz hasło</label><br>
+											<input type="password" id="haslo2" name="haslo2" placeholder="Powtórz hasło">
+									</div>
 									<div id="dziala"></div>
 
 									<div class="przycisk">

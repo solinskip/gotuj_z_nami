@@ -27,7 +27,7 @@ try {
 			//	if($wiersz_czas_przygotowania['cp'] == 0){
 			//		echo "Brak głosów";
 			//	}
-				if($wiersz_czas_przygotowania['cp'] < 0.60 AND $wiersz_czas_przygotowania['cp'] > 0.00){
+				if($wiersz_czas_przygotowania['cp'] < 0.60 AND $wiersz_czas_przygotowania['cp'] >= 0.00){
 					echo '<span style="color: #EA2027;">Nie poprawny</span>';
 				}
 				else{

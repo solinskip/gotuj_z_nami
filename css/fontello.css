@@ -82,6 +82,27 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 } /* '' */
+.icon-chart-bar1_p:before { 
+  content: '\e801'; 
+  font-size: 19px;
+  background: linear-gradient(to right, #333333 33%,grey 25%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+} /* '' */
+.icon-chart-bar2_p:before { 
+  content: '\e801'; 
+  font-size: 19px;
+  background: linear-gradient(to right, #333333 66%,grey 25%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+} /* '' */
+.icon-chart-bar3_p:before { 
+  content: '\e801'; 
+  font-size: 19px;
+  background: linear-gradient(to right, #333333 100%,grey 25%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+} /* '' */
 .icon-star:before { content: '\e802'; color: #4a9927; font-size: 19px;} /* '' */
 .icon-star-half-alt:before { content: '\f123'; color: #4a9927; font-size: 19px;} /* '' */
 

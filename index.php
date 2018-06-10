@@ -12,7 +12,7 @@
 			$polaczenie->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 			$polaczenie->query("SET CHARSET utf8");
 			
-			$ocena_przepisu = $polaczenie->query('SELECT oceny.id_przepisu,przepisy.id_przepisu,przepisy.tytul, przepisy.skrot_opis,przepisy.czas_przygotowania,przepisy.stopien_trudnosci, (SUM(ocena) / COUNT(oceny.id_przepisu)) AS ocena_p FROM oceny, przepisy WHERE oceny.id_przepisu = przepisy.id_przepisu GROUP BY oceny.id_przepisu ORDER BY przepisy.id_przepisu DESC LIMIT 50');
+			$ocena_przepisu = $polaczenie->query('SELECT przepisy.id_przepisu, przepisy.tytul, przepisy.skrot_opis, przepisy.czas_przygotowania, przepisy.stopien_trudnosci, SUM(oceny.ocena) / COUNT(przepisy.id_przepisu) AS ocena_p FROM przepisy LEFT JOIN oceny ON przepisy.id_przepisu=oceny.id_przepisu GROUP BY przepisy.id_przepisu ORDER BY przepisy.id_przepisu DESC');
 
 			$polaczenie->close();
 		}
@@ -35,6 +35,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css"/>
 	<link rel="stylesheet" type="text/css" href="css/fontello.css">
 	<link href="https://fonts.googleapis.com/css?family=Lato:400,700i&amp;subset=latin-ext" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
 </head>
 <body>
 <div id="kontener">
@@ -71,7 +72,7 @@
 		 					if($wiersz['ocena_p'] > $i + 0.5){
 		 						echo '<i class="icon-star"></i>';
 		 					}
-		 					elseif ($wiersz['ocena_p'] > $i + 0.01  && $wiersz['ocena_p'] < $i + 0.5) {
+		 					elseif ($wiersz['ocena_p'] > $i + 0.01  && $wiersz['ocena_p'] <= $i + 0.5) {
 		 						echo '<i class="icon-star-half-alt"></i>';
 		 					}
 		 					elseif($wiersz['ocena_p'] <= $i){

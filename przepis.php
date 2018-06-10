@@ -1,6 +1,7 @@
 <?php
 	session_start();
 	require_once 'polaczenie.php';
+	$_SESSION['aktualna_strona'] = $_SERVER['REQUEST_URI'];
 	$id_przepisu = $_GET['id'];
 
 	try {
@@ -11,7 +12,7 @@
 		else{
 		$polaczenie->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 		$polaczenie->query("SET CHARSET utf8");
-		$rezultat = $polaczenie->query("SELECT p.*,sp.nazwa_spos_przygotowania FROM przepisy AS p LEFT JOIN sposob_przygotowania AS sp ON p.id_spos_przygotowania=sp.id_spos_przygotowania WHERE p.id_przepisu='$id_przepisu'");
+		$rezultat = $polaczenie->query("SELECT uzytkownicy.uzytkownik,p.*,sp.nazwa_spos_przygotowania FROM przepisy AS p LEFT JOIN sposob_przygotowania AS sp ON p.id_spos_przygotowania=sp.id_spos_przygotowania LEFT JOIN uzytkownicy ON p.id_uzytkownika=uzytkownicy.id_uzytkownika WHERE p.id_przepisu='$id_przepisu'");
 		if(isset($_SESSION['zalogowany'])){
 			$rezultat_komentarze = $polaczenie->query("SELECT uzytkownicy.uzytkownik, komentarze.id_komentarza,komentarze.komentarz, komentarze.data, komentarze.id_uzytkownika FROM komentarze LEFT JOIN przepisy ON przepisy.id_przepisu=komentarze.id_przepisu LEFT JOIN uzytkownicy ON komentarze.id_uzytkownika=uzytkownicy.id_uzytkownika WHERE komentarze.id_przepisu='$id_przepisu' ORDER BY komentarze.data DESC");
 		}
@@ -84,7 +85,7 @@
 			<?php echo $wiersz['skrot_opis']; ?>
 		</div>
 		<div class="przepis_dodany_przez">
-			Przepis został dodany przez: <span class="przepis_dodany_przez_osoba"><?php echo $wiersz['autor']; ?></span>
+			Przepis został dodany przez: <span class="przepis_dodany_przez_osoba"><?php echo $wiersz['uzytkownik']; ?></span>
 		</div>
 		<div class="przepis_zdjecie_przepisu">
 			<img src="obrazy_potraw/<?php echo $id_przepisu; ?>.jpg">
@@ -97,11 +98,23 @@
 				<dt class="przepis_ip_cp_2"><?php czas_przygotowania(); ?></dt>
 				<dd class="przepis_ip_cp_3">
 					<i class="icon-clock-black"></i><?php echo $wiersz['czas_przygotowania']; ?> min.
-					<i class="far fa-check-circle przepis_ip_p" id="przepis_ip_pot"></i>
-					<i class="far fa-times-circle przepis_ip_z" id="przepis_ip_zap"></i>			
+					<?php if(isset($_SESSION['zalogowany'])){ ?>
+						<i class="far fa-check-circle przepis_ip_p" id="przepis_ip_pot"></i>
+						<i class="far fa-times-circle przepis_ip_z" id="przepis_ip_zap"></i>
+					<?php } else{ echo '<i class="przepis_ip_p" style="font-size: 15px; color: #e2e2e2;">sss</i><i class="przepis_ip_z" style="font-size: 15px; color: #e2e2e2;">ss</i>'; }?>			
 				</dd>
 				<dd class="przepis_ip_cp_4"></dd>
-				<dt style="clear: both;">Liczba porcji:</dt>
+				<dt style="clear: both;">Stopień trudności</dt>
+				<dd>
+					<?php if($wiersz['stopien_trudnosci'] == 1){ ?>
+		 		   				<i class="icon-chart-bar1_p"></i>Łatwy
+		 		   			<?php } elseif($wiersz['stopien_trudnosci'] == 2){ ?>
+		 		   				<i class="icon-chart-bar2_p"></i>Średni
+		 		   			<?php } elseif($wiersz['stopien_trudnosci'] == 3){ ?>
+		 		   				<i class="icon-chart-bar3_p"></i>Trudny
+		 		   			<?php } ?>
+				</dd>
+				<dt>Liczba porcji:</dt>
 				<dd><i class="icon-food"></i><?php echo $wiersz['liczba_porcji']; ?> porcje</dd>
 				<dt>Inne informację:</dt>
 				<dd><?php informacja(); ?></dd>
@@ -127,8 +140,7 @@
 			<div class="pipt">Skladniki:</div>
 			<ul>
 				<?php $skladniki = explode(",", $wiersz['skladniki']);
-				count($skladniki);
-				for ($i=0; $i < 6; $i++) { 
+				for ($i=0; $i < count($skladniki); $i++) { 
 					echo '<li>'.$skladniki[$i].'</li>';
 				} ?>
 			</ul>
