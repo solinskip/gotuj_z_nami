@@ -28,53 +28,7 @@
 				echo "Informacja developera: ".$e;
 		}
 
-		//dodawanie zdjęcia
-
-		// $target_dir = "obrazy_potraw/";
-		// $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-		// $uploadOk = 1;
-		// $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-		// $target_file_save = $target_dir.($wiersz['id_przepisu'] + 1).'.'.$imageFileType;
-		// // Check if image file is a actual image or fake image
-		// if(isset($_POST["submit"])) {
-		//     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-		//     if($check !== false) {
-		//         $upload_image_error = "Plik o nazwie - " . $check["mime"] . ".";
-		//         $uploadOk = 1;
-		//     } else {
-		//         $upload_image_error = "Plik nie jest obrazem.";
-		//         $uploadOk = 0;
-		//     }
-		// }
-		// // Check if file already exists
-		// if (file_exists($target_file)) {
-		//     $upload_image_error = "Wybrany przez ciebie plik już istnieje.";
-		//     $uploadOk = 0;
-		// }
-		// // Check file size
-		// if ($_FILES["fileToUpload"]["size"] > 500000) {
-		//     $upload_image_error = "Wybrany plik jest za duży.";
-		//     $uploadOk = 0;
-		// }
-		// // Allow certain file formats
-		// if($imageFileType != "jpg") {
-		//     $upload_image_error = "Dozwolone rozszerzenia obrazu to - JPG.";
-		//     $uploadOk = 0;
-		// }
-		// // Check if $uploadOk is set to 0 by an error
-		// if ($uploadOk == 0) {
-		//     $upload_image_error = "Obraz nie został poprawnie wgrany na serwer.";
-		// // if everything is ok, try to upload file
-		// } else {
-		//     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file_save)) {
-		//         $wszystkoOK = true;
-		//     } else {
-		//         $upload_image_error = "Przepraszamy podczas wgrywania wystąpił błąd.";
-		//         $wszystkoOK =false;
-		//     }
-		// }
 		//walidacja pól
-
 		//sprawdzanie poprawności tytułu
 		$tytul_p = $_POST['tytul_p'];
 		if((strlen($tytul_p) <= 3) || (strlen($tytul_p) > 50)){
@@ -337,8 +291,7 @@
 						echo '<div class="error_d_p">'.$stopien_t_error.'</div>';
 						unset($stopien_t_error);
 					} ?>
-				</div>
-				
+					</div>
 				</div>
 				<div class="wiersz_p">
 					<label class="tytul_d_p">Czas przygotowania</label><br>

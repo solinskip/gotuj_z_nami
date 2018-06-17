@@ -1,5 +1,4 @@
 <?php
-
 	require_once "polaczenie.php";
 
 	if(strlen($_POST['wyszukiwarka']) != ""){
@@ -17,8 +16,7 @@
 
 				$polaczenie->close();
 			}
-		
-			} 
+		} 
 		catch (Exception $e) {
 			echo '<span style="color:red;">Błąd serwera przepraszamy na niedogodności</span>';
 			echo "Informacja developera: ".$e;
@@ -38,4 +36,3 @@
 		}
 	}
 
-?>

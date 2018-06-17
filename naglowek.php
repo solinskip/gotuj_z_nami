@@ -4,9 +4,9 @@
 		</div>
 		<div id="srodkowy_naglowek">
 			<nav class="menu_zawartosc">
-				<li><a href="index.php">Strona główna | </a></li>
-				<li><a href="dodaj_przepis.php">Dodaj nowy przepis | </a></li>
-				<li id="kategorie">Kategorie</li>
+				<li><a href="index.php">Strona główna |</a></li>
+				<li><a href="dodaj_przepis.php">Dodaj nowy przepis |</a></li>
+				<li><a href="kategorie.php">Kategorie</a></li>
 			</nav>
 		</div>
 		<div id="prawy_naglowek">
@@ -34,10 +34,8 @@
 							echo "Błędy login lub hasło";
 							unset($_SESSION['blad_logowania']);
 						}
-					echo '
-					</div>
-
-					<div id="rejestracja">'; 
+					echo '</div>';
+					echo '<div id="rejestracja">'; 
 					?>
 						<a id="lean_modal" href="#modal">Nie masz jeszcze konta ? Zarejestruj się</a>
 
@@ -46,7 +44,6 @@
 								<span class="naglowek_tytul">Rejestracja</span>
 								<span class="modal_close">x</span>
 							</header>
-
 							<div class="rejestracja_cialo">
 							<!-- Pola rejestracji -->
 								<form action="">
@@ -68,21 +65,18 @@
 											<label class="rc_t">Powtórz hasło</label><br>
 											<input type="password" id="haslo2" name="haslo2" placeholder="Powtórz hasło">
 									</div>
-									<div id="dziala"></div>
-
 									<div class="przycisk">
 										<a id="rejestracja_przycisk" href="#">Zarejestruj się</a>
 									</div>
+									<div id="dziala"></div>
 								</form>
 							</div>
 							<div id="rejestracja_udana" style="display: none;">
 							Rejestracja przebiegła pomyślnie. Teraz możesz się zalogować.
 							</div>
 						</div>
-						<?php	
-					echo '</div>';
-			}
-		?>
+						<?php echo '</div>';
+			} ?>
 		</div>
 		<div style="clear: both;"></div>
 	</div>

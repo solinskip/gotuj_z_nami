@@ -26,7 +26,6 @@
 		}
 
 		//dodawanie zdjęcia
-
 		$target_dir = "obrazy_potraw/";
 		$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 		$uploadOk = 1;
@@ -70,8 +69,8 @@
 		        $wszystkoOK =false;
 		    }
 		}
-		//walidacja pól
 
+		//walidacja pól
 		//sprawdzanie poprawności tytułu
 		$tytul_p = $_POST['tytul_p'];
 		if((strlen($tytul_p) <= 3) || (strlen($tytul_p) > 50)){
@@ -106,7 +105,7 @@
 			$wszystkoOK = false;
 		}
 
-		$stopien_t = $_POST['stopien_t'];
+		if(isset($_POST['stopien_t'])) { $stopien_t = $_POST['stopien_t']; }
 		if(!isset($_POST['stopien_t'])){
 			$stopien_t_error = "Wybierz stopień trudności potrawy";
 			$wszystkoOK = false;
@@ -192,7 +191,7 @@
 						exit();
 					}
 				$polaczenie->close();
-			}
+				}
 			} 
 			catch (Exception $e) {
 				echo '<span style="color:red;">Błąd serwera przepraszamy na niedogodności</span>';
@@ -231,6 +230,7 @@
 	<script type="text/javascript" src="skrypt.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link href="https://fonts.googleapis.com/css?family=Lato&amp;subset=latin-ext" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css">
 </head>
 <body>
 <div id="kontener_nowy_przepis">

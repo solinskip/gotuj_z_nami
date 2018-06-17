@@ -1,5 +1,4 @@
  $(function() {
-
 	$("#wyszukiwarka").keyup(function() {
 		var tytul = $("#wyszukiwarka").val();
 		$.post("wyszukiwarka.php", {
@@ -7,6 +6,32 @@
 		}, function(data, status) {
 			$("#wyswietlanie_wyszukiwania").html(data);
 		});
+	});
+
+	var nazwa = "";
+	var filtr_kategorie = "";
+	var filtr_czas_przygotowania = "";
+	var filtr_stopien_trudnosci = "";
+	$('#formularz_filtry_kategorie :checkbox, #formularz_filtry_czas_przygotowania :checkbox,#formularz_filtry_stopien_trudnosci :checkbox').change(function () {	
+		var nazwa_filtra = $(this).attr("name");
+    	if ($(this).is(':checked')){
+    		if(nazwa_filtra == "kategorie"){ filtr_kategorie = filtr_kategorie + $(this).val() +","; }
+    		if(nazwa_filtra == "czas_przygotowania"){ filtr_czas_przygotowania = filtr_czas_przygotowania + $(this).val() +","; }
+    		if(nazwa_filtra == "stopien_trudnosci"){ filtr_stopien_trudnosci = filtr_stopien_trudnosci + $(this).val() +","; }
+    	} 
+    	else{ 
+    		if(nazwa_filtra == "kategorie"){ filtr_kategorie = filtr_kategorie.replace($(this).val() + ",", ""); }
+ 			if(nazwa_filtra == "czas_przygotowania"){ filtr_czas_przygotowania = filtr_czas_przygotowania.replace($(this).val() + ",", ""); }
+ 			if(nazwa_filtra == "stopien_trudnosci"){ filtr_stopien_trudnosci = filtr_stopien_trudnosci.replace($(this).val() + ",", ""); }
+    	}  	
+
+    	$.post("kategorie_skrypt.php", {
+    		filtr_kategorie: filtr_kategorie,
+    		filtr_czas_przygotowania: filtr_czas_przygotowania,
+    		filtr_stopien_trudnosci: filtr_stopien_trudnosci
+    	}, function(data,status) {
+    		$(".k_k_wyswietlanie_przepisow").html(data);
+    	});
 	});
 
 	$("#rejestracja_przycisk").click(function() {
@@ -35,19 +60,30 @@
 	$("#dodaj_skladnik_p").click(function() {
 		var pole_skladnik = document.getElementById("nowe_skladniki_p");
 
-		var span = document.createElement("div");
-		span.setAttribute("class", "input_ods");
+		var div = document.createElement("div");
+		div.setAttribute("class", "input_ods");
+
+		var divclear = document.createElement("div");
+		divclear.setAttribute("style", "clear: both");
 
 		var nowe_pole = document.createElement("input");
 		nowe_pole.type = 'text';
-		nowe_pole.setAttribute("class", "input_p");
+		nowe_pole.setAttribute("class", "input_ps");
 		nowe_pole.name = 'skladnik_p'+i_s;
-		var remove = '<div class="usun_skladnik">Usuń składnik</div>';
+		var remove = document.createElement("a");
+		
+		remove.setAttribute("class", "usun_skladnik_p");
+		remove.textContent = "";
 		i_s++;
 
-		pole_skladnik.appendChild(span);
-		span.appendChild(nowe_pole);
-		span.appendChild(remove);
+		pole_skladnik.appendChild(div);
+		div.appendChild(nowe_pole);
+		div.appendChild(remove);
+		 pole_skladnik.appendChild(divclear);
+	});
+
+	$(".usun_skladnik_p").click(function(e) {
+		e.remove();
 	});
 
 	$("#wyszukiwarka").keyup(function() {
@@ -74,8 +110,6 @@
 
 	$(".przepis_pk_uk_id").click(function() {
 		var id_komentarza_js = this.id;
-		/*var element = document.getElementById("przepis_pk_id_"+id_komentarza_js);
-		element.remove();*/
 
 		$(this).parent().closest(".przepis_pk").remove();
 

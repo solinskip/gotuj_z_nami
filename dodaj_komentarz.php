@@ -10,7 +10,6 @@ if (isset($_POST['komentarz'])) {
 			throw new Exception(mysqli_connect_errno());
 		}
 		else{
-
 			$polaczenie->query("SET NAMES 'utf8' COLLATE 'utf8_polish_ci'");
 			$polaczenie->query("SET CHARSET utf8");
 			$id_uzytkownika = $_SESSION['id_uzytkownika'];

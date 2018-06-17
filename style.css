@@ -38,7 +38,7 @@ body{
 	line-height: 48px;
 	vertical-align: middle;
 	padding-left: : 8px;
-	padding-right: 8px;
+	padding-right: 5px;
 }
 .menu_zawartosc li a{
 	text-decoration: none;
@@ -299,7 +299,7 @@ ul li.wyniki_wyszukiwania a:focus {
 }
 
 /* CSS odpowiedzialny za rejestracje */
-#lean_overlay {
+#lean_overlay{
 		position: fixed;
 		z-index: 100;
 		top: 0px;
@@ -309,7 +309,7 @@ ul li.wyniki_wyszukiwania a:focus {
 		background: #000;
 		display: none;
 }
-.rejestracja_pojemnik {
+.rejestracja_pojemnik{
 		position: absolute;
 		width: 330px;
 		height: auto;
@@ -354,7 +354,7 @@ ul li.wyniki_wyszukiwania a:focus {
 	height: 27px;
 	background-color: #FCFCFC;
 	color: black;
-	border: 1px solid #718093;
+	border: 1px solid #718093; 
 	border-radius: 3px;
 	font-size: 15px;
 	box-sizing: border-box; 
@@ -380,10 +380,14 @@ ul li.wyniki_wyszukiwania a:focus {
 .rejestracja_udana{
 	padding-left: 10px;
 }
-/* CSS odpowiedialny za przepis */
-#przepis_kontener{
-
+.rejestracja_input_error{
+	border: 1px solid #e74c3c !important;
 }
+.form_error_span{
+	color: red;
+	font-size: 12px;
+}
+/* CSS odpowiedialny za przepis */
 #przepis_zawartosc_przepisu{
 	width: 1000px;
 	margin-right: auto;
@@ -417,8 +421,7 @@ ul li.wyniki_wyszukiwania a:focus {
 	min-height: 350px;
 	width: 470px;
 }
-.przepis_info_przepisu
-{
+.przepis_info_przepisu{
 	float: left;
 	background-color: #e2e2e2;
 	width: 280px;
@@ -438,7 +441,6 @@ ul li.wyniki_wyszukiwania a:focus {
 	text-align: center;
 	font-size: 16px;
 	max-height: 25px;
-	
 }
 .przepis_ip_cp_3{
 	float: left;
@@ -539,15 +541,6 @@ ul li.wyniki_wyszukiwania a:focus {
 	padding: 6px;
 	cursor: pointer;
 }
-.przepis_k{
-
-}
-.przepis_wk{
-
-}
-.przepis_pk{
-
-}
 .przepis_pk_u{
 	float: left;
 	color: #4267b2;
@@ -590,33 +583,21 @@ ul li.wyniki_wyszukiwania a:focus {
  	padding-top: 40px;
  	text-align: center;
 }
-#kontener_nowy_przepis
-{
-
-}
-#nowy_przepis
-{
+#nowy_przepis{
 	width: 960px;
 	margin: 0 auto;	margin: 0 auto;
 	text-align: left;
 }
-#tresc_przepisu
-{
-
-}
-.wiersz_p
-{
+.wiersz_p{
 padding-bottom: 5px;
 }
-.wiersz_pfl
-{
+.wiersz_pfl{
 	float: left;
 	width: 480px;
 	padding-bottom: 10px;
 	margin-top: 10px;
 }
-.tytul_d_p
-{
+.tytul_d_p{
 	color: black;
 	font-size: 17px;
 }
@@ -637,6 +618,18 @@ padding-bottom: 5px;
 	border-radius: 3px;
 	font-size: 15px;
 	box-sizing: border-box; 
+}
+.input_ps{
+	display: block;
+	width: 200px;
+	height: 27px;
+	background-color: #FCFCFC;
+	color: black;
+	border: 1px solid #718093;
+	border-radius: 3px;
+	font-size: 15px;
+	box-sizing: border-box; 
+	float: left;
 }
 .input_p_bd{
 	width: 200px;
@@ -710,14 +703,12 @@ padding-bottom: 5px;
     float: left;
     padding-right: 13px;
 }
-
 /* Hide the browser's default checkbox */
 .radio_checkbox input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
 }
-
 /* Create a custom checkbox */
 .checkmark {
     position: absolute;
@@ -727,29 +718,24 @@ padding-bottom: 5px;
     width: 25px;
     background-color: #eee;
 }
-
 /* On mouse-over, add a grey background color */
 .radio_checkbox:hover input ~ .checkmark {
     background-color: #ccc;
 }
-
 /* When the checkbox is checked, add a blue background */
 .radio_checkbox input:checked ~ .checkmark {
     background-color: #2196F3;
 }
-
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
     content: "";
     position: absolute;
     display: none;
 }
-
 /* Show the checkmark when checked */
 .radio_checkbox input:checked ~ .checkmark:after {
     display: block;
 }
-
 /* Style the checkmark/indicator */
 .radio_checkbox .checkmark:after {
     left: 9px;
@@ -761,6 +747,9 @@ padding-bottom: 5px;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+}
+.usun_skladnik_p{
+	float: left;
 }
 /* Style dla profil.php - początek ******************************************************************/
 .profil_pojemnik{
@@ -775,7 +764,7 @@ padding-bottom: 5px;
 	margin-bottom: 10px;
 }
 .pp_info{
-padding: 5px 5px
+	padding: 5px 5px
 }
 .pp_info_w{
 	padding-left: 3px;
@@ -806,3 +795,40 @@ padding: 5px 5px
 	color: black;
 }
 /* Style dla profil.php - koniec ********************************************************************/
+/* Style dla kategorie.php **************************************************************************/
+.k_kategorie{
+	width: 1100px;
+	margin: 0 auto;
+	margin-top: 40px;
+}
+.k_k_filtry{
+	float: left;
+	box-sizing: border-box;
+	width: 180px;
+	margin-top: 15px;
+}
+.k_k_wyswietlanie_przepisow{
+	float: left;
+	box-sizing: border-box;
+	width: 800px;
+	margin-left: 10px;
+}
+.k_k_f_sekcja{
+	border-bottom: 1px solid #4267b2;
+	padding-bottom: 10px;
+}
+.k_k_f_s_tytul{
+	padding: 5px 0px;
+}
+.k_k_f_s_t_opcje{
+	padding: 2px 0px;
+}
+.k_k_f_s_t_opcje_floatleft{
+	float: left;
+	width: 90px;
+}
+.kolor_niebieski{
+	color: #4267b2;
+	padding-bottom: 5px;
+}
+/* Style dla kategorie.php - koniec **************************************************************************/

@@ -2,7 +2,6 @@
 session_start();
 
 include ('polaczenie.php');
-
 $id_komentarza = $_POST['id_komentarza'];
 
 try {
